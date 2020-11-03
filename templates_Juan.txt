@@ -1,0 +1,128 @@
+# -*- coding: utf-8 -*-
+"""
+Editor de Spyder
+
+Este es un archivo temporal.
+"""
+
+import abc
+import inspect
+
+import numpy as np
+
+import attr
+
+import jinja2
+
+
+TEMPLATE = jinja2.Template("""
+class {{cls_name}}({{cls_base_name}}):
+{% for method in methods %}
+{{method}}
+{% endfor %}
+""")
+
+
+
+def final(func):
+    func.__pymetheus_final = True
+    return func
+
+
+class Method(abc.ABC):
+
+    # @abc.abstractmethod
+    # def get_template(cls):
+    #     raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get_random_values(cls):
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def run(self):
+        raise NotImplementedError()
+
+    @classmethod
+    def gen_template(cls):
+
+        cls_base_name = cls.__name__
+        cls_name = cls_base_name.replace("Template", "")
+
+
+        methods = []
+
+        abstracts = vars(cls)["__abstractmethods__"]
+        for abst_name in sorted(abstracts):
+            abst = getattr(cls, abst_name)
+            source = inspect.getsource(abst)
+            source = "\n".join(source.splitlines()[1:])
+            methods.append(source)
+
+        tpl = TEMPLATE.render(
+            cls_name=cls_name,
+            cls_base_name=cls_base_name,
+            methods=methods).strip()
+
+        return tpl
+
+
+
+@attr.s()
+class FiniteElement2DTemplate(Method):
+
+    seed = attr.ib(default=None)
+    random = attr.ib(init=False)
+
+    @random.default
+    def _random_default(self):
+        return np.random.RandomState(seed=self.seed)
+
+    @final
+    @classmethod
+    def get_random_values(cls,self):
+        return {
+            "k": self.random.uniform(),
+            "v": self.random.uniform(),
+            "c": self.random.uniform()}
+
+    @abc.abstractmethod
+    def heat_initialize(self):
+        pass
+
+    @abc.abstractmethod
+    def heat_dirichlet(self):
+        pass
+
+    @abc.abstractmethod
+    def heat_neumann(self):
+        pass
+
+    @abc.abstractmethod
+    def heat_robin(self):
+        pass
+
+
+    @final
+    def run(self):
+        k, v, c = self.get_random_values()
+        k, c, f = self.heat_initialize()
+        k, c, f = self.gen_system(k, c, f)
+        f = self.gen_neumann()
+        k, f = self.heat_robin()
+        f = self.heat_pcond()
+        k, f = self.heat_dirichlet()
+        phi, q = self.heat_solve()
+
+    def gen_system(self):
+        pass
+
+    def heat_pcond(self):
+        pass
+
+    def heat_solve(self):
+        pass
+
+
+tpl = FiniteElement2DTemplate.gen_template()
+print(tpl)
