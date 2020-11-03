@@ -1,3 +1,5 @@
 env/
 .idea/
 octave-workspace
+pymetheus/__pycache__
+pymetheus/impl/__pycache__/

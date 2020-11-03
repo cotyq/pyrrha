@@ -2,6 +2,10 @@ import numpy as np
 import attr
 from abc import ABC, abstractmethod
 
+from report import Report
+from decorators import validation_classes
+from validators import DimensionValidator, ValueValidator
+
 
 class Method(ABC):
     # @abstractmethod
@@ -28,29 +32,33 @@ class FiniteElement2D(Method):
         return {"k": ..., "v": ..., "c": ...}
 
     @abstractmethod
+    @validation_classes([DimensionValidator])
     def heat_initialize(self):
         pass
 
     @abstractmethod
+    @validation_classes([ValueValidator])
     def heat_neumann(self):
         pass
 
     @abstractmethod
+    @validation_classes([ValueValidator])
     def heat_robin(self):
         pass
 
     @abstractmethod
+    @validation_classes([ValueValidator])
     def heat_dirichlet(self):
         pass
 
-    def run(self):
-        k, c, f = self.heat_initialize()
-        k, c, f = self.gen_system(k, c, f)
-        f = self.gen_neumann()
-        k, f = self.heat_robin()
-        f = self.heat_pcond()
-        k, f = self.heat_dirichlet()
-        phi, q = self.heat_solve()
+    # def run(self):
+    #     k, c, f = self.heat_initialize()
+    #     k, c, f = self.gen_system(k, c, f)
+    #     f = self.gen_neumann()
+    #     k, f = self.heat_robin()
+    #     f = self.heat_pcond()
+    #     k, f = self.heat_dirichlet()
+    #     phi, q = self.heat_solve()
 
     def gen_system(self):
         pass
