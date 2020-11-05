@@ -2,9 +2,8 @@ import numpy as np
 import attr
 from abc import ABC, abstractmethod
 
-from report import Report
-from decorators import validation_classes
-from validators import DimensionValidator, ValueValidator
+from pymetheus.decorators import validation_classes
+from pymetheus.validators import DimensionValidator, ValueValidator
 
 
 class Method(ABC):
@@ -33,22 +32,22 @@ class FiniteElement2D(Method):
 
     @abstractmethod
     @validation_classes([DimensionValidator])
-    def heat_initialize(self):
+    def heat_initialize(self, **kwargs):
         pass
 
     @abstractmethod
     @validation_classes([ValueValidator])
-    def heat_neumann(self):
+    def heat_neumann(self, **kwargs):
         pass
 
     @abstractmethod
     @validation_classes([ValueValidator])
-    def heat_robin(self):
+    def heat_robin(self, **kwargs):
         pass
 
     @abstractmethod
     @validation_classes([ValueValidator])
-    def heat_dirichlet(self):
+    def heat_dirichlet(self, **kwargs):
         pass
 
     # def run(self):

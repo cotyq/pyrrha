@@ -1,5 +1,5 @@
 import inspect
-import impl
+import pymetheus.impl as impl
 
 
 class Runner:
