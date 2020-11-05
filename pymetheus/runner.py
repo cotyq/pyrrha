@@ -1,11 +1,14 @@
 import inspect
-import pymetheus.impl as impl
+import impl
 
 
 class Runner:
     @staticmethod
     def validate_class(programmed_class, seed=None):
         method_implementation = Runner.search_implementation(programmed_class)
+        if not method_implementation:
+            raise NotImplementedError()
+
         base_method = programmed_class.__bases__[0]
 
         # Methods to evaluate are those with validation_classes attribute
@@ -13,6 +16,13 @@ class Runner:
                        for name, method
                        in inspect.getmembers(base_method, predicate=inspect.isfunction)
                        if getattr(method, 'validation_classes', None)]
+
+        values = base_method.get_random_values()
+        programmed_class_instance = programmed_class()
+        method_implementation_instance = method_implementation()
+
+        programmed_class_instance.set_values(values)
+        method_implementation_instance.set_values(values)
 
         for method, validator in to_evaluate:
             print(method)
