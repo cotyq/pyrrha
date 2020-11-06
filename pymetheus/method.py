@@ -3,8 +3,8 @@ from scipy.sparse import lil_matrix
 import attr
 from abc import ABC, abstractmethod, abstractproperty
 
-from pymetheus.decorators import validation_classes
-from pymetheus.validators import DimensionValidator, ValueValidator
+from .decorators import validation_classes
+from .validators import DimensionValidator, ValueValidator
 
 
 class Method(ABC):
@@ -23,8 +23,21 @@ class Method(ABC):
 
 @attr.s
 class FiniteElement2D(Method):
+    # TODO agregar @final para evitar que lo pisen las heredadas
+    def __init__(self, attributes=None):
+        if attributes:  # attributes is a dictionary containing the attributes
+            self.set_attributes(attributes)
+
     @classmethod
     def get_random_values(cls, seed=None):
+        """ Create a dictionary containing random values to initialize the
+        instances
+
+        :param seed: seed for the random arrays/numbers generator.
+        :return: dictionary with random values.
+        """
+        np.random.seed(seed)
+
         r_values = {}
 
         r_n_nodes = np.random.randint(4, 8)
@@ -32,14 +45,14 @@ class FiniteElement2D(Method):
         neumann_size = np.random.randint(0, r_n_nodes)
         robin_size = np.random.randint(0, r_n_nodes)
 
-        r_values['r_n_nodes'] = r_n_nodes
-        r_values['r_x_node'] = np.random.rand(r_n_nodes, 2)
-        r_values['r_dirichlet'] = np.random.rand(dirichlet_size, 2)
-        r_values['r_neumann'] = np.random.rand(neumann_size, 2)
-        r_values['r_robin'] = np.random.rand(robin_size, 2)
-        r_values['r_K'] = lil_matrix((r_n_nodes, r_n_nodes))
-        r_values['r_C'] = lil_matrix((r_n_nodes, r_n_nodes))
-        r_values['r_F'] = lil_matrix((r_n_nodes, 1))
+        r_values['n_nodes'] = r_n_nodes
+        r_values['x_node'] = np.random.rand(r_n_nodes, 2)
+        r_values['dirichlet'] = np.random.rand(dirichlet_size, 2)
+        r_values['neumann'] = np.random.rand(neumann_size, 2)
+        r_values['robin'] = np.random.rand(robin_size, 2)
+        r_values['K'] = lil_matrix((r_n_nodes, r_n_nodes))
+        r_values['C'] = lil_matrix((r_n_nodes, r_n_nodes))
+        r_values['F'] = lil_matrix((r_n_nodes, 1))
 
         return r_values
 
@@ -73,9 +86,6 @@ class FiniteElement2D(Method):
         # phi, q = self.heat_solve()
         pass
 
-    def set_values(self, **kwargs):
-        print(kwargs)
-
     def gen_system(self):
         pass
 
@@ -84,6 +94,14 @@ class FiniteElement2D(Method):
 
     def heat_solve(self):
         pass
+
+    def set_attributes(self, attributes):
+        """ Set class attributes according to the provided dictionary
+
+        :param attributes: dictionary that contains the attributes
+        """
+        for key, val in attributes.items():
+            setattr(self, key, val)
 
 
 class FiniteVolume2D(Method):

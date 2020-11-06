@@ -1,8 +1,0 @@
-numpy~=1.19.4
-pep8==1.7.1
-attrs~=20.2.0
-setuptools~=50.3.2
-matplotlib~=3.3.2
-Jinja2~=2.11.2
-oct2py~=5.2.0
-octave-kernel==0.32.0

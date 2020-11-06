@@ -3,7 +3,7 @@ import pathlib
 from setuptools import setup
 
 
-REQUIREMENTS = ["numpy", "attrs", "oc2py"]
+REQUIREMENTS = ["numpy", "attrs", "oct2py", "Jinja2"]
 PATH = pathlib.Path(os.path.abspath(os.path.dirname(__file__)))
 VERSION = "0.1"
 DESCRIPTION = "Pymetheus descripcion corta"  # TODO completar descripcion corta
@@ -25,13 +25,5 @@ setup(
     url="https://gitlab.com/dsklar/pymetheus",
     license="MIT",
     keywords=["pymetheus"],
-    packages=["pymetheus"],
+    packages=["pymetheus", "pymetheus.implementations"],
     install_requires=REQUIREMENTS)
-
-
-def do_setup():
-    pass
-
-
-if __name__ == "__main__":
-    do_setup()

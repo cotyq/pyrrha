@@ -1,6 +1,6 @@
 from oct2py import octave
 
-from method import FiniteElement2D
+from ..method import FiniteElement2D
 
 
 class FiniteElement2DImpl(FiniteElement2D):
