@@ -25,5 +25,5 @@ setup(
     url="https://gitlab.com/dsklar/pymetheus",
     license="MIT",
     keywords=["pymetheus"],
-    packages=["pymetheus", "pymetheus.implementations"],
+    packages=["pymetheus", "pymetheus.impl"],
     install_requires=REQUIREMENTS)

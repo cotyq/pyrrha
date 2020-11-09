@@ -1,32 +1,31 @@
 import numpy as np
 from scipy.sparse import lil_matrix
 import attr
-from abc import ABC, abstractmethod, abstractproperty
+from abc import ABC, abstractmethod
 
 from .decorators import validation_classes
 from .validators import DimensionValidator, ValueValidator
 
 
 class Method(ABC):
+    @classmethod
     @abstractmethod
-    def get_random_values(self):
+    def get_random_values(cls):
         raise NotImplementedError()
 
     @abstractmethod
     def run(self):
         raise NotImplementedError()
 
+    @classmethod
     @abstractmethod
-    def set_values(self, **kwargs):
+    def get_pipeline(cls):
         raise NotImplementedError()
 
 
 @attr.s
 class FiniteElement2D(Method):
     # TODO agregar @final para evitar que lo pisen las heredadas
-    def __init__(self, attributes=None):
-        if attributes:  # attributes is a dictionary containing the attributes
-            self.set_attributes(attributes)
 
     @classmethod
     def get_random_values(cls, seed=None):
@@ -53,28 +52,43 @@ class FiniteElement2D(Method):
         r_values['K'] = lil_matrix((r_n_nodes, r_n_nodes))
         r_values['C'] = lil_matrix((r_n_nodes, r_n_nodes))
         r_values['F'] = lil_matrix((r_n_nodes, 1))
+        r_values['icone'] = None
+        r_values['pun'] = None
+        r_values['model'] = None
 
         return r_values
 
     @abstractmethod
     @validation_classes([DimensionValidator])
-    def heat_initialize(self, **kwargs):
-        pass
+    def heat_initialize(self, n_nodes):
+        raise NotImplementedError()
 
     @abstractmethod
     @validation_classes([ValueValidator])
-    def heat_neumann(self, **kwargs):
-        pass
+    def heat_neumann(self, F, neumann, x_node):
+        raise NotImplementedError()
 
     @abstractmethod
     @validation_classes([ValueValidator])
-    def heat_robin(self, **kwargs):
-        pass
+    def heat_robin(self, K, F, robin, x_node):
+        raise NotImplementedError()
 
     @abstractmethod
     @validation_classes([ValueValidator])
-    def heat_dirichlet(self, **kwargs):
-        pass
+    def heat_dirichlet(self, K, F, dirichlet):
+        raise NotImplementedError()
+
+    @classmethod
+    def get_pipeline(cls):
+        return [
+            (cls.heat_initialize, ['n_nodes']),
+            # (cls.gen_system, ['K', 'C', 'F', 'x_node', 'icone', 'model']),
+            (cls.heat_neumann, ['F', 'neumann', 'x_node']),
+            (cls.heat_robin, ['K', 'F', 'robin', 'x_node']),
+            # (cls.heat_pcond, ['F', 'x_node', 'icone', 'pun']),
+            (cls.heat_dirichlet, ['K', 'F', 'dirichlet']),
+            # (cls.heat_solve, ['K', 'C', 'F', 'x_node', 'icone', 'model']),
+        ]
 
     def run(self):
         # k, c, f = self.heat_initialize()
@@ -86,22 +100,14 @@ class FiniteElement2D(Method):
         # phi, q = self.heat_solve()
         pass
 
-    def gen_system(self):
+    def gen_system(self, K, C, F, x_node, icone, model):
         pass
 
-    def heat_pcond(self):
+    def heat_pcond(self, F, x_node, icone, pun):
         pass
 
-    def heat_solve(self):
+    def heat_solve(self, K, C, F, x_node, icone, model):
         pass
-
-    def set_attributes(self, attributes):
-        """ Set class attributes according to the provided dictionary
-
-        :param attributes: dictionary that contains the attributes
-        """
-        for key, val in attributes.items():
-            setattr(self, key, val)
 
 
 class FiniteVolume2D(Method):
