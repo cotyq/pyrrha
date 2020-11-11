@@ -8,12 +8,9 @@ Este es un archivo temporal.
 import abc
 import inspect
 
-import numpy as np
-
 import attr
-
 import jinja2
-
+import numpy as np
 
 TEMPLATE = jinja2.Template("""
 class {{cls_name}}({{cls_base_name}}):
@@ -21,7 +18,6 @@ class {{cls_name}}({{cls_base_name}}):
 {{method}}
 {% endfor %}
 """)
-
 
 
 def final(func):
@@ -45,15 +41,13 @@ class Method(abc.ABC):
 
     @classmethod
     def gen_template(cls):
-
         cls_base_name = cls.__name__
         cls_name = cls_base_name.replace("Template", "")
-
 
         methods = []
 
         abstracts = vars(cls)["__abstractmethods__"]
-        for abst_name in sorted(abstracts):
+        for abst_name in abstracts:
             abst = getattr(cls, abst_name)
             source = inspect.getsource(abst)
             source = "\n".join(source.splitlines()[1:])
@@ -67,10 +61,8 @@ class Method(abc.ABC):
         return tpl
 
 
-
 @attr.s()
 class FiniteElement2DTemplate(Method):
-
     seed = attr.ib(default=None)
     random = attr.ib(init=False)
 
@@ -80,7 +72,7 @@ class FiniteElement2DTemplate(Method):
 
     @final
     @classmethod
-    def get_random_values(cls,self):
+    def get_random_values(cls, self):
         return {
             "k": self.random.uniform(),
             "v": self.random.uniform(),
@@ -99,9 +91,13 @@ class FiniteElement2DTemplate(Method):
         pass
 
     @abc.abstractmethod
-    def heat_robin(self):
-        pass
+    def heat_robin(self, T):
+        """ Descripcion
 
+        :T: entrada
+        :return:
+        """
+        pass
 
     @final
     def run(self):
