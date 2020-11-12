@@ -1,6 +1,5 @@
 import abc
 import inspect
-import attr
 
 from jinja2 import Template
 
@@ -13,11 +12,11 @@ class {{cls_name}}({{cls_base_name}}):
 
 class TemplateGenerator(abc.ABC):
     
-    @classmethod
+    @staticmethod
     def gen_template(cls):
 
         cls_base_name = cls.__name__
-        cls_name = cls_base_name.replace("Template", "")
+        cls_name = cls_base_name+"Template"
 
 
         methods = []
@@ -36,63 +35,5 @@ class TemplateGenerator(abc.ABC):
 
         return tpl
 
-@attr.s()      
-class FiniteElement2DTemplate(TemplateGenerator):
-
-    @abc.abstractmethod
-    def heat_initialize(self):
-        pass
-
-    @abc.abstractmethod
-    def heat_dirichlet(self):
-        pass
-
-    @abc.abstractmethod
-    def heat_neumann(self):
-        pass
-
-    @abc.abstractmethod
-    def heat_robin(self):
-        pass
-
-    @abc.abstractmethod
-    def gen_system(self):
-        pass
-
-    @abc.abstractmethod
-    def heat_pcond(self):
-        pass
-    
-    @abc.abstractmethod
-    def heat_solve(self):
-        pass
-
-@attr.s()      
-class FiniteVolumne2DTemplate(TemplateGenerator):
-  
-    @abc.abstractmethod
-    def heat_dirichlet(self):
-        pass
-
-    @abc.abstractmethod
-    def heat_neumann(self):
-        pass
-
-    @abc.abstractmethod
-    def heat_robin(self):
-        pass
-  
-@attr.s()      
-class FiniteDifference2DTemplate(TemplateGenerator):
-  
-    @abc.abstractmethod
-    def heat_dirichlet(self):
-        pass
-
-    @abc.abstractmethod
-    def heat_neumann(self):
-        pass
-
-    @abc.abstractmethod
-    def heat_robin(self):
-        pass
+# import method      
+# clase = TemplateGenerator.gen_template(method.FiniteElement2D)
