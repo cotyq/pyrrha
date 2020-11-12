@@ -1,4 +1,5 @@
 import numpy as np
+import oct2py as oct
 from scipy.sparse import lil_matrix
 import attr
 from abc import ABC, abstractmethod
@@ -35,26 +36,34 @@ class FiniteElement2D(Method):
         :param seed: seed for the random arrays/numbers generator.
         :return: dictionary with random values.
         """
+        r_values = oct.io.loadmat('../fem2d_octave/data_system1.mat')
+        n = len(r_values['xnode'])
         np.random.seed(seed)
+        
+        r_values['K'] = np.random.uniform(size=(n,n))
+        r_values['C'] = np.random.uniform(size=(n,n))
+        r_values['F'] = np.random.uniform(size=(n,1))
+        
+        # r_values['K'] = lil_matrix((r_n_nodes, r_n_nodes))
+        # r_values['C'] = lil_matrix((r_n_nodes, r_n_nodes))
+        # r_values['F'] = lil_matrix((r_n_nodes, 1))
+        
+        # r_values = {}
 
-        r_values = {}
+        # r_n_nodes = np.random.randint(4, 8)
+        # dirichlet_size = np.random.randint(0, r_n_nodes)
+        # neumann_size = np.random.randint(0, r_n_nodes)
+        # robin_size = np.random.randint(0, r_n_nodes)
 
-        r_n_nodes = np.random.randint(4, 8)
-        dirichlet_size = np.random.randint(0, r_n_nodes)
-        neumann_size = np.random.randint(0, r_n_nodes)
-        robin_size = np.random.randint(0, r_n_nodes)
-
-        r_values['n_nodes'] = r_n_nodes
-        r_values['x_node'] = np.random.rand(r_n_nodes, 2)
-        r_values['dirichlet'] = np.random.rand(dirichlet_size, 2)
-        r_values['neumann'] = np.random.rand(neumann_size, 2)
-        r_values['robin'] = np.random.rand(robin_size, 2)
-        r_values['K'] = lil_matrix((r_n_nodes, r_n_nodes))
-        r_values['C'] = lil_matrix((r_n_nodes, r_n_nodes))
-        r_values['F'] = lil_matrix((r_n_nodes, 1))
-        r_values['icone'] = None
-        r_values['pun'] = None
-        r_values['model'] = None
+        # r_values['n_nodes'] = r_n_nodes
+        # r_values['x_node'] = np.random.rand(r_n_nodes, 2)
+        # r_values['dirichlet'] = np.random.rand(dirichlet_size, 2)
+        # r_values['neumann'] = np.random.rand(neumann_size, 2)
+        # r_values['robin'] = np.random.rand(robin_size, 2)
+        
+        # r_values['icone'] = None
+        # r_values['pun'] = None
+        # r_values['model'] = None
 
         return r_values
 
