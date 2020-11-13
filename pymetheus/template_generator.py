@@ -3,21 +3,23 @@ import inspect
 
 from jinja2 import Template
 
-TEMPLATE = Template("""
+
+TEMPLATE = Template(
+    """
 class {{cls_name}}({{cls_base_name}}):
 {% for method in methods %}
 {{method}}
 {% endfor %}
-""")
+"""
+)
+
 
 class TemplateGenerator(abc.ABC):
-    
     @staticmethod
     def gen_template(cls):
 
         cls_base_name = cls.__name__
-        cls_name = cls_base_name+"Template"
-
+        cls_name = cls_base_name + "Template"
 
         methods = []
 
@@ -29,11 +31,11 @@ class TemplateGenerator(abc.ABC):
             methods.append(source)
 
         tpl = TEMPLATE.render(
-            cls_name=cls_name,
-            cls_base_name=cls_base_name,
-            methods=methods).strip()
+            cls_name=cls_name, cls_base_name=cls_base_name, methods=methods
+        ).strip()
 
         return tpl
 
-# import method      
+
+# import method
 # clase = TemplateGenerator.gen_template(method.FiniteElement2D)
