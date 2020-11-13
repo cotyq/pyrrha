@@ -1,21 +1,25 @@
-import pytest
-
 from pymetheus.impl.finite_element_2d_impl import FiniteElement2DImpl
+from pymetheus.method import FiniteElement2D
 from pymetheus.runner import Runner
 from pymetheus.validators import DimensionValidator
-from pymetheus.method import FiniteElement2D
+
+import pytest
 
 
 @pytest.fixture
 def test_finite_element_2d():
     class TestFiniteElement2D(FiniteElement2D):
-        def heat_initialize(self, n_nodes): ...
+        def heat_initialize(self, n_nodes):
+            ...
 
-        def heat_neumann(self, F, neumann, x_node): ...
+        def heat_neumann(self, F, neumann, x_node):
+            ...
 
-        def heat_robin(self, K, F, robin, x_node): ...
+        def heat_robin(self, K, F, robin, x_node):
+            ...
 
-        def heat_dirichlet(self, K, F, dirichlet): ...
+        def heat_dirichlet(self, K, F, dirichlet):
+            ...
 
     return TestFiniteElement2D
 

@@ -1,5 +1,6 @@
 import os
 import pathlib
+
 from setuptools import setup
 
 
@@ -16,14 +17,12 @@ setup(
     version=VERSION,
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
-    long_description_content_type='text/markdown',
-    author=[
-        "Diego Sklar",
-        "Franco Matzkin",
-        "Constanza Quaglia"],
+    long_description_content_type="text/markdown",
+    author=["Diego Sklar", "Franco Matzkin", "Constanza Quaglia"],
     author_email="dsklar@gmail.com",
     url="https://gitlab.com/dsklar/pymetheus",
     license="MIT",
     keywords=["pymetheus"],
     packages=["pymetheus", "pymetheus.impl"],
-    install_requires=REQUIREMENTS)
+    install_requires=REQUIREMENTS,
+)

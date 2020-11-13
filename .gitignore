@@ -6,3 +6,4 @@ pymetheus/impl/__pycache__/
 test/__pycache__/
 pymetheus.egg-info/
 .tox/
+.coverage

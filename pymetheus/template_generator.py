@@ -1,6 +1,3 @@
-from jinja2 import Template
-
-
 class TemplateGenerator:
     class_template = ""
 
