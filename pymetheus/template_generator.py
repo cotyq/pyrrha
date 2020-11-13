@@ -8,7 +8,8 @@ TEMPLATE = Template(
     """
 class {{cls_name}}({{cls_base_name}}):
 {% for method in methods %}
-{{method}}
+    {{method}}:
+        pass
 {% endfor %}
 """
 )
@@ -26,8 +27,8 @@ class TemplateGenerator(abc.ABC):
         abstracts = vars(cls)["__abstractmethods__"]
         for abst_name in sorted(abstracts):
             abst = getattr(cls, abst_name)
-            source = inspect.getsource(abst)
-            source = "\n".join(source.splitlines()[1:])
+            signature = inspect.signature(abst)
+            source = "{}{}".format(abst_name, signature)
             methods.append(source)
 
         tpl = TEMPLATE.render(
