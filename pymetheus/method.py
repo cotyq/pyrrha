@@ -26,6 +26,8 @@ class Method(ABC):
 
 class FiniteElement2D(Method):
     # TODO agregar @final para evitar que lo pisen las heredadas
+    def __init__(self):
+        octave.addpath("./fem2d_octave")
 
     @classmethod
     def get_initial_values(cls, seed=None):
@@ -87,24 +89,29 @@ class FiniteElement2D(Method):
             (cls.heat_dirichlet, ["K", "F", "dirichlet"]),
         ]
 
-    def run(self):
-        # k, c, f = self.heat_initialize()
-        # k, c, f = self.gen_system(k, c, f)
-        # f = self.gen_neumann()
-        # k, f = self.heat_robin()
-        # f = self.heat_pcond()
-        # k, f = self.heat_dirichlet()
-        # phi, q = self.heat_solve()
-        pass
+    def run(self, n_nodes):
+        k, c, f = self.heat_initialize(n_nodes)
+        k, c, f = self.gen_system(k, c, f)
+        f = self.gen_neumann()
+        k, f = self.heat_robin()
+        f = self.heat_pcond()
+        k, f = self.heat_dirichlet()
+        phi, q = self.heat_solve()
+        return k, c, f, phi, q
 
     def gen_system(self, K, C, F, x_node, icone, model):
-        pass
+        K, C, F = octave.fem2d_heat_gen_system(
+            K, C, F, x_node, icone, model, nout=3
+        )
+        return K, C, F
 
     def heat_pcond(self, F, x_node, icone, pun):
-        pass
+        F = octave.fem2d_heat_pcond(F, x_node, icone, pun)
+        return F
 
     def heat_solve(self, K, C, F, x_node, icone, model):
-        pass
+        phi, q = octave.fem2d_heat_solve(K, C, F, x_node, icone, model, nout=2)
+        return phi, q
 
 
 class FiniteVolume2D(Method):
