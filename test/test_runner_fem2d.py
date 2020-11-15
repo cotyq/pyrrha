@@ -1,3 +1,4 @@
+from pymetheus.constants import IMPLEMENTATIONS
 from pymetheus.impl.finite_element_2d_impl import FiniteElement2DImpl
 from pymetheus.method import FiniteElement2D
 from pymetheus.runner import Runner
@@ -25,15 +26,17 @@ def test_finite_element_2d():
 
 
 def test_search_implementation_exists(test_finite_element_2d):
-    _, impl = Runner.search_implementation(test_finite_element_2d)
-    assert impl == FiniteElement2DImpl
+    runner = Runner(test_finite_element_2d, IMPLEMENTATIONS)
+    assert runner.method_impl == FiniteElement2DImpl
 
 
-def test_search_implementation_not_exists(test_finite_element_2d):
-    # It receives a class without implementation
+def test_search_implementation_not_exists():
     with pytest.raises(NotImplementedError):
-        Runner.search_implementation(DimensionValidator)
+        # Create a Runner with a programmed class which is not present in the
+        # IMPLEMENTATIONS dictionary
+        Runner(DimensionValidator, IMPLEMENTATIONS)
 
 
-# def test_validate_class(test_finite_element_2d):
-#     Runner.validate_class(test_finite_element_2d)
+def test_validate_class(test_finite_element_2d):
+    # todo evaluate a whole class Runner(test_finite_element_2d)
+    pass

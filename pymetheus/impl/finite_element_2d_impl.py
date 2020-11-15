@@ -5,7 +5,7 @@ from ..method import FiniteElement2D
 
 class FiniteElement2DImpl(FiniteElement2D):
     def __init__(self):
-        octave.addpath("./fem2d_octave")
+        super()
 
     def heat_initialize(self, n_nodes):
         k, c, f = octave.fem2d_heat_initialize(n_nodes, nout=3)
