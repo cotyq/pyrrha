@@ -1,4 +1,4 @@
-# Pyrrha
+![pyrra](https://gitlab.com/dsklar/pyrrha/uploads/f6f763a9ce81995256a6de4809e898e2/image__24_.png)
 
 pyrrha is a tool for helping in the developement and testing of
  Computational Mechanics methods.
