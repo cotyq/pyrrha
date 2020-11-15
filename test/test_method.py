@@ -1,4 +1,4 @@
-from pymetheus.method import FiniteElement2D
+from pyrrha.method import FiniteElement2D
 
 import pytest
 

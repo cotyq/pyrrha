@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from pymetheus.method import FiniteElement2D
-from pymetheus.template_generator import TemplateGenerator
+from pyrrha.method import FiniteElement2D
+from pyrrha.template_generator import TemplateGenerator
 
 import pytest
 
