@@ -1,8 +1,8 @@
-from pymetheus.constants import IMPLEMENTATIONS
-from pymetheus.impl.finite_element_2d_impl import FiniteElement2DImpl
-from pymetheus.method import FiniteElement2D
-from pymetheus.runner import Runner
-from pymetheus.validators import DimensionValidator
+from pyrrha.constants import IMPLEMENTATIONS
+from pyrrha.impl.finite_element_2d_impl import FiniteElement2DImpl
+from pyrrha.method import FiniteElement2D
+from pyrrha.runner import Runner
+from pyrrha.validators import DimensionValidator
 
 import pytest
 

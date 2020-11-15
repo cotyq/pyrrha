@@ -1,9 +1,9 @@
 env/
 .idea/
 octave-workspace
-pymetheus/__pycache__/
-pymetheus/impl/__pycache__/
+pyrrha/__pycache__/
+pyrrha/impl/__pycache__/
 test/__pycache__/
-pymetheus.egg-info/
+pyrrha.egg-info/
 .tox/
 .coverage

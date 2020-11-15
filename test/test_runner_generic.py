@@ -1,8 +1,8 @@
 from abc import abstractmethod
 
-from pymetheus.method import Method
-from pymetheus.report import Status
-from pymetheus.runner import Runner
+from pyrrha.method import Method
+from pyrrha.report import Status
+from pyrrha.runner import Runner
 
 import pytest
 

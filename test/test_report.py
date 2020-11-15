@@ -1,4 +1,4 @@
-from pymetheus.report import Report, Status
+from pyrrha.report import Report, Status
 
 import pytest
 
