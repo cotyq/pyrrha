@@ -11,7 +11,7 @@ import pytest
 def test_base_method():
     class BaseMethod(Method):
         @classmethod
-        def get_initial_values(cls):
+        def get_initial_values(cls, seed=None):
             return {"a": 5, "b": 7}
 
         def run(self):
@@ -86,11 +86,9 @@ def implementations(test_base_method, test_impl_method):
 
 
 def test_validate_class_accepted(
-    implementations, test_programmed_method_accepted
+    test_programmed_method_accepted, implementations
 ):
-    report = Runner.validate_class(
-        test_programmed_method_accepted, implementations=implementations
-    )
+    runner = Runner(test_programmed_method_accepted, implementations)
 
     target_result = [
         {"name": "sum", "position": 0, "status": Status.SUCCESS},
@@ -98,15 +96,13 @@ def test_validate_class_accepted(
         {"name": "sort", "position": 1, "status": Status.SUCCESS},
     ]
 
-    assert all([a == b for a, b in zip(report.results, target_result)])
+    assert all([a == b for a, b in zip(runner.report.results, target_result)])
 
 
 def test_validate_class_value_error(
-    implementations, test_programmed_method_value_error
+    test_programmed_method_value_error, implementations
 ):
-    report = Runner.validate_class(
-        test_programmed_method_value_error, implementations=implementations
-    )
+    runner = Runner(test_programmed_method_value_error, implementations)
 
     target_result = [
         {"name": "sum", "position": 0, "status": Status.VALUE_ERROR},
@@ -114,19 +110,17 @@ def test_validate_class_value_error(
         {"name": "sort", "position": 1, "status": Status.VALUE_ERROR},
     ]
 
-    assert all([a == b for a, b in zip(report.results, target_result)])
+    assert all([a == b for a, b in zip(runner.report.results, target_result)])
 
 
 def test_validate_class_tuple_error(
-    implementations, test_programmed_method_tuple_error
+    test_programmed_method_tuple_error, implementations
 ):
-    report = Runner.validate_class(
-        test_programmed_method_tuple_error, implementations=implementations
-    )
+    runner = Runner(test_programmed_method_tuple_error, implementations)
 
     target_result = [
         {"name": "sum", "position": 0, "status": Status.TYPE_ERROR},
         {"name": "sort", "position": 0, "status": Status.TYPE_ERROR},
     ]
 
-    assert all([a == b for a, b in zip(report.results, target_result)])
+    assert all([a == b for a, b in zip(runner.report.results, target_result)])

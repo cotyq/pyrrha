@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 import numpy as np
 
-import oct2py as octave
+from oct2py import io as octave_io, octave
 
 from .decorators import validation_classes
 from .validators import DimensionValidator, ValueValidator
@@ -11,7 +11,7 @@ from .validators import DimensionValidator, ValueValidator
 class Method(ABC):
     @classmethod
     @abstractmethod
-    def get_initial_values(cls):
+    def get_initial_values(cls, seed=None):
         raise NotImplementedError()
 
     @abstractmethod
@@ -38,7 +38,7 @@ class FiniteElement2D(Method):
         :return: dictionary with random values.
         """
         initial_values = {}
-        octave_values = octave.io.loadmat("./fem2d_octave/data_system1.mat")
+        octave_values = octave_io.loadmat("./fem2d_octave/data_system1.mat")
 
         n = len(octave_values["xnode"])
         initial_values["n_nodes"] = n
