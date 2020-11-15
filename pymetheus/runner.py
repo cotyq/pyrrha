@@ -15,7 +15,7 @@ class Runner:
             programmed_class, implementations
         )
 
-        values = base_method.get_random_values()
+        values = base_method.get_initial_values()
         programmed_class_instance = programmed_class()
         method_impl_instance = method_impl()
 

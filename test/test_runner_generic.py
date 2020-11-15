@@ -11,7 +11,7 @@ import pytest
 def test_base_method():
     class BaseMethod(Method):
         @classmethod
-        def get_random_values(cls):
+        def get_initial_values(cls):
             return {"a": 5, "b": 7}
 
         def run(self):
