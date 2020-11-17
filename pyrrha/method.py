@@ -38,7 +38,7 @@ class FiniteElement2D(Method):
         :return: dictionary with random values.
         """
         initial_values = {}
-        octave_values = octave_io.loadmat("./fem2d_octave/data_system1.mat")
+        octave_values = octave_io.loadmat("./fem2d_octave/test_data.dat")
 
         n = len(octave_values["xnode"])
         initial_values["n_nodes"] = n
