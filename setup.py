@@ -3,7 +3,6 @@ import pathlib
 
 from setuptools import setup
 
-
 REQUIREMENTS = ["numpy", "attrs", "oct2py", "Jinja2"]
 PATH = pathlib.Path(os.path.abspath(os.path.dirname(__file__)))
 VERSION = "0.1"
@@ -26,6 +25,12 @@ setup(
     url="https://gitlab.com/dsklar/pyrrha",
     license="MIT",
     keywords=["pyrrha"],
-    packages=["pyrrha", "pyrrha.impl"],
+    packages=[
+        "pyrrha",
+        "pyrrha.impl",
+        "pyrrha.octave_src",
+        "pyrrha.octave_src.fem2d_octave",
+    ],
     install_requires=REQUIREMENTS,
+    include_package_data=True,
 )

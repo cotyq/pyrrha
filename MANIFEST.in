@@ -1,0 +1,9 @@
+include *.yml
+include LICENSE
+include tox.ini
+recursive-include pyrrha *.m
+recursive-include pyrrha *.mat
+recursive-include pyrrha *.md
+recursive-include pyrrha *.odp
+recursive-include pyrrha *.pdf
+recursive-include pyrrha *.txt

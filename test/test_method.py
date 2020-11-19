@@ -1,3 +1,6 @@
+import numpy as np
+
+from pyrrha.impl.finite_element_2d_impl import FiniteElement2DImpl
 from pyrrha.method import FiniteElement2D
 
 import pytest
@@ -21,3 +24,21 @@ def test_pipeline_parameters(test_initial_values, test_pipeline):
     """
     pipeline_keys = {key for _, keys in test_pipeline for key in keys}
     assert pipeline_keys.issubset(test_initial_values.keys())
+
+
+def test_run_fe2d():
+    iv = FiniteElement2D.get_initial_values()
+    ins = FiniteElement2DImpl()
+
+    k, c, f, phi, q = ins.run(
+        iv["n_nodes"],
+        iv["x_node"],
+        iv["icone"],
+        iv["model"],
+        iv["dirichlet"],
+        iv["neumann"],
+        iv["robin"],
+        iv["pun"],
+    )
+
+    assert np.all(np.isclose(iv["phi"].toarray(), phi.toarray()))

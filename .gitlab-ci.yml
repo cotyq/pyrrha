@@ -23,7 +23,7 @@ before_script:
 test:
   script:
     - apt-get update
-    - apt-get -y install octave
+    - apt-get -y install octave_src
     - python setup.py test
     - pip install tox
     - tox
