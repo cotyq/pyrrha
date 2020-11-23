@@ -3,6 +3,7 @@ env/
 octave-workspace
 pyrrha/__pycache__/
 pyrrha/impl/__pycache__/
+pyrrha/octave_src/__pycache__/
 test/__pycache__/
 pyrrha.egg-info/
 .tox/

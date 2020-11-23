@@ -1,11 +1,12 @@
 import os
 import pathlib
 
-from setuptools import setup
+from setuptools import find_packages, setup
 
-REQUIREMENTS = ["numpy", "attrs", "oct2py", "Jinja2"]
+REQUIREMENTS = ["numpy", "oct2py", "Jinja2", "clize"]
+
 PATH = pathlib.Path(os.path.abspath(os.path.dirname(__file__)))
-VERSION = "0.1"
+
 DESCRIPTION = (
     "pyrrha is a tool for helping in the developement and testing "
     "of Computational Mechanics methods."
@@ -13,6 +14,14 @@ DESCRIPTION = (
 
 with open(PATH / "README.md") as fp:
     LONG_DESCRIPTION = fp.read()  # TODO completar README
+
+with open(PATH / "pyrrha" / "pyrrha.py") as fp:
+    VERSION = (
+        [line for line in fp.readlines() if line.startswith("__version__")][0]
+        .split("=", 1)[-1]
+        .strip()
+        .replace('"', "")
+    )
 
 setup(
     name="pyrrha",
@@ -25,12 +34,8 @@ setup(
     url="https://gitlab.com/dsklar/pyrrha",
     license="MIT",
     keywords=["pyrrha"],
-    packages=[
-        "pyrrha",
-        "pyrrha.impl",
-        "pyrrha.octave_src",
-        "pyrrha.octave_src.fem2d_octave",
-    ],
+    packages=find_packages(include=["pyrrha", "pyrrha.*"]),
     install_requires=REQUIREMENTS,
     include_package_data=True,
+    entry_points={"console_scripts": ["pyrrha=pyrrha.pyrrha:main"]},
 )
