@@ -20,19 +20,19 @@ The name pyrrha comes from Pyrrha, the wife of Deucalion (the son of Prometheus
 ### Generate template from a base class
 
 ```
-pyrrha --generate FiniteElement2D CustomElement2D
+pyrrha generate FiniteElement2D --output CustomElement2D
 ```
 
 ### Test implemented class
 
 Test the whole class
 ```
-pyrrha --test CustomElement2D
+pyrrha test CustomElement2D
 ```
 
 Test a particular method.
 ```
-pyrrha --test CustomElement2D heat_neumann
+pyrrha test CustomElement2D heat_neumann
 ```
 
 <div>Icons made by <a href="https://www.flaticon.com/authors/darius-dan" title="Darius Dan">Darius Dan</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
