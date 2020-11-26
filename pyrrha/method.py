@@ -6,9 +6,9 @@ import numpy as np
 
 from oct2py import io as octave_io, octave
 
-from .decorators import validation_classes
-from .octave_src import FEM2D_PATH, correct_indexes
-from .validators import DimensionValidator, ValueValidator
+from decorators import validation_classes
+from octave_src import FEM2D_PATH, correct_indexes
+from validators import DimensionValidator, ValueValidator
 
 
 class Method(ABC):
@@ -52,7 +52,7 @@ class Method(ABC):
 
 class FiniteElement2D(Method):
     """Class to instance Method.
-    
+
     class to define a specific Numerical Method.
     """
 
@@ -167,8 +167,8 @@ class FiniteElement2D(Method):
     def heat_dirichlet(self, K, F, dirichlet):
         """Abstract method to apply the Dirichlet condition.
 
-        The Dirichlet conditions are applied to modify the K matrix and F vector
-        of de system based in data Dirichlet matrix.
+        The Dirichlet conditions are applied to modify the K matrix and F
+        vector of de system based in data Dirichlet matrix.
 
         Parameters
         ----------
@@ -178,7 +178,7 @@ class FiniteElement2D(Method):
                 F vector of the system.
         dirichlet : float matrix
                 data dirichlet matrix.
-        
+
         Returns
         -------
         modified K maxtrix and F vector
@@ -218,7 +218,7 @@ class FiniteElement2D(Method):
                 data Robin matrix.
         pun: float matrix
                 heat source puntual data matrix
-        
+
         Returns
         -------
         k : float matrix
@@ -258,7 +258,7 @@ class FiniteElement2D(Method):
                 mesh connectivity elements.
         model : dictionary
                 constants of the physical model.
-        
+
         Returns
         -------
         K : float matrix
@@ -287,7 +287,7 @@ class FiniteElement2D(Method):
                 mesh connectivity elements.
         pun: float matrix
                 heat source puntual data matrix.
-        
+
         Returns
         -------
         F : float vector
@@ -331,7 +331,7 @@ class FiniteElement2D(Method):
 
 class FiniteVolume2D(Method):
     """Class to instance Method.
-    
+
     class to define a specific Numerical Method.
     """
 
@@ -340,7 +340,7 @@ class FiniteVolume2D(Method):
 
 class FiniteDifferences(Method):
     """Class to instance Method.
-    
+
     class to define a specific Numerical Method.
     """
 
