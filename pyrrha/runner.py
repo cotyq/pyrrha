@@ -1,4 +1,4 @@
-""" Runner class for method/class comparison.
+"""Runner class for method/class comparison.
 
 The Runner class allows to compare two different implementations of a
 certain abstract class, by comparing a particular method only, or the whole
@@ -91,7 +91,9 @@ class Runner:
         pipeline = self.base_method.get_pipeline()
 
         # Get the corresponding arguments for that method
-        args = next(arg for met, arg in pipeline if met == method)
+        args = next(
+            arg for met, arg in pipeline if met.__name__ == method.__name__
+        )
         self.compare_method_with_impl(method, args)
 
         return self.report
@@ -154,13 +156,19 @@ class Runner:
 
         """
         method_name = method.__name__
+
+        res_p = float(res_p) if type(res_p) == int else res_p
+        res_i = float(res_i) if type(res_i) == int else res_i
+
         if Runner.error_type(res_p, res_i):
             self.report.add_error_type(method_name)
-
-        # Create list of tuples with programmed/implemented results
-        res_t = zip(res_p, res_i) if type(res_p) is tuple else [(res_p, res_i)]
-        for pos, (e_p, e_i) in enumerate(res_t):
-            self.compare_elements(e_p, e_i, method, pos)  # Compare values
+        else:
+            # Create list of tuples with programmed/implemented results
+            res_t = (
+                zip(res_p, res_i) if type(res_p) is tuple else [(res_p, res_i)]
+            )
+            for pos, (e_p, e_i) in enumerate(res_t):
+                self.compare_elements(e_p, e_i, method, pos)  # Compare values
 
     @staticmethod
     def error_type(res_p, res_i):

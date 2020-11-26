@@ -7,11 +7,11 @@ from jinja2 import Template
 # templeate format to generate each method
 TEMPLATE = Template(
     """
-    class {{cls_name}}({{cls_base_name}}):
-    {% for method in methods %}
-        {{method}}:
-            pass
-    {% endfor %}
+class {{cls_name}}({{cls_base_name}}):
+{% for method in methods %}
+    {{method}}:
+        pass
+{% endfor %}
     """
 )
 

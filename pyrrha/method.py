@@ -6,9 +6,7 @@ import numpy as np
 
 from oct2py import io as octave_io, octave
 
-from decorators import validation_classes
-from octave_src import FEM2D_PATH, correct_indexes
-from validators import DimensionValidator, ValueValidator
+from .octave_src import FEM2D_PATH, correct_indexes
 
 
 class Method(ABC):
@@ -31,7 +29,7 @@ class Method(ABC):
         -------
         dictionary with random values.
         """
-        raise NotImplementedError()
+        ...
 
     @abstractmethod
     def run(self):
@@ -41,13 +39,13 @@ class Method(ABC):
         -------
         vector with phi solution.
         """
-        raise NotImplementedError()
+        ...
 
     @classmethod
     @abstractmethod
     def get_pipeline(cls):
         """Abstract method to get pipeline."""
-        raise NotImplementedError()
+        ...
 
 
 class FiniteElement2D(Method):
@@ -98,7 +96,6 @@ class FiniteElement2D(Method):
         return initial_values
 
     @abstractmethod
-    @validation_classes([DimensionValidator])
     def heat_initialize(self, n_nodes):
         """Abstract method to initialize the matrix and vector of the system.
 
@@ -112,10 +109,9 @@ class FiniteElement2D(Method):
         matrix K with n_nodes rows and n_nodes columns and vector F with
         n_nodes rows.
         """
-        raise NotImplementedError()
+        raise ...
 
     @abstractmethod
-    @validation_classes([ValueValidator])
     def heat_neumann(self, F, neumann, x_node):
         """Abstract method to apply the Neumann condition.
 
@@ -135,10 +131,9 @@ class FiniteElement2D(Method):
         -------
         modified F vector
         """
-        raise NotImplementedError()
+        raise ...
 
     @abstractmethod
-    @validation_classes([ValueValidator])
     def heat_robin(self, K, F, robin, x_node):
         """Abstract method to apply the Robin condition.
 
@@ -160,10 +155,9 @@ class FiniteElement2D(Method):
         -------
         modified K maxtrix and F vector
         """
-        raise NotImplementedError()
+        raise ...
 
     @abstractmethod
-    @validation_classes([ValueValidator])
     def heat_dirichlet(self, K, F, dirichlet):
         """Abstract method to apply the Dirichlet condition.
 
@@ -183,7 +177,7 @@ class FiniteElement2D(Method):
         -------
         modified K maxtrix and F vector
         """
-        raise NotImplementedError()
+        raise ...
 
     @classmethod
     def get_pipeline(cls):
