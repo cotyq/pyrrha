@@ -29,12 +29,15 @@ def test_generic_class():
 
 def test_template_generator(test_generic_class):
     target_template = """
+from pyrrha.method import GenericClass
+
+
 class GenericClassTemplate(GenericClass):
 
-    method_template_with_params(self, a, b):
+    def method_template_with_params(self, a, b):
         pass
 
-    method_template_without_params(self):
+    def method_template_without_params(self):
         pass
 """
     template = TemplateGenerator.gen_template(test_generic_class)
@@ -43,18 +46,21 @@ class GenericClassTemplate(GenericClass):
 
 def test_template_generator_finite_element_2d():
     target_template = """
+from pyrrha.method import FiniteElement2D
+
+
 class FiniteElement2DTemplate(FiniteElement2D):
 
-    heat_dirichlet(self, K, F, dirichlet):
+    def heat_dirichlet(self, K, F, dirichlet):
         pass
 
-    heat_initialize(self, n_nodes):
+    def heat_initialize(self, n_nodes):
         pass
 
-    heat_neumann(self, F, neumann, x_node):
+    def heat_neumann(self, F, neumann, x_node):
         pass
 
-    heat_robin(self, K, F, robin, x_node):
+    def heat_robin(self, K, F, robin, x_node):
         pass
 """
     template = TemplateGenerator.gen_template(FiniteElement2D)

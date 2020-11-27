@@ -54,7 +54,6 @@ class FiniteElement2D(Method):
     class to define a specific Numerical Method.
     """
 
-    # TODO agregar @final para evitar que lo pisen las heredadas
     def __init__(self):
         """Add path to run the octave code implementations."""
         octave.addpath(FEM2D_PATH)

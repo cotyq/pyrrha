@@ -6,13 +6,15 @@ from jinja2 import Template
 
 # templeate format to generate each method
 TEMPLATE = Template(
-    """
+    """from pyrrha.method import {{cls_base_name}}
+
+
 class {{cls_name}}({{cls_base_name}}):
 {% for method in methods %}
-    {{method}}:
+    def {{method}}:
         pass
 {% endfor %}
-    """
+"""
 )
 
 
@@ -49,6 +51,6 @@ class TemplateGenerator(abc.ABC):
 
         tpl = TEMPLATE.render(
             cls_name=cls_name, cls_base_name=cls_base_name, methods=methods
-        ).strip()
+        )
 
         return tpl

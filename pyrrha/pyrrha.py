@@ -1,10 +1,12 @@
 __version__ = "0.1"
 
-import inspect
+from inspect import getmro, isclass, ismethod
 
-import clize
+import typer
 
 from .constants import IMPLEMENTATIONS
+from .method import Method
+from .runner import Runner
 from .template_generator import TemplateGenerator
 
 VERSION = __version__
@@ -22,20 +24,21 @@ class CLI:
     )
 
     def get_commands(self):
-        methods = {}
+        app = typer.Typer()
         for k in dir(self):
             if k.startswith("_"):
                 continue
             v = getattr(self, k)
-            if inspect.ismethod(v) and k != "get_commands":
-                methods[k] = v
-        return methods
+            if ismethod(v) and k != "get_commands":
+                decorator = app.command()
+                decorator(v)
+        return app
 
     def version(self):
         """Print pyrrha version."""
         print(VERSION)
 
-    def generate(self, base, *, output=""):
+    def generate(self, base, output=""):
         """Generate template from given base class
 
         Parameters
@@ -46,20 +49,58 @@ class CLI:
             The name of the base file
         """
         base_class = self._get_base_class(base)
-        print(TemplateGenerator.gen_template(base_class))
+
+        template = TemplateGenerator.gen_template(base_class)
+        if output == "":
+            print(template)
+        else:
+            try:
+                with open(output, "w") as file:
+                    file.write(template)
+            except FileNotFoundError:
+                raise typer.BadParameter(
+                    "wrong output file name ({})".format(output)
+                )
+
+    def validate(self, file, method=""):
+        try:
+            a = {}
+            exec(open(file).read(), globals(), a)
+            globals().update(a)
+            chk = None
+            for k, v in a.items():
+                if (
+                    isclass(v)
+                    and getmro(v)[1] != Method
+                    and issubclass(v, Method)
+                ):
+                    chk = v
+                    break
+            if chk is None:
+                raise typer.BadParameter(
+                    "no appropiate class found in {}".format(file)
+                )
+
+            runner = Runner(chk, IMPLEMENTATIONS)
+            report = runner.validate_class()
+            print(report.results)
+            return report
+
+        except FileNotFoundError:
+            raise typer.BadParameter("file not found ({})".format(file))
 
     def _get_base_class(self, base):
         base_class = [b for b in IMPLEMENTATIONS.keys() if b.__name__ == base]
         if not base_class:
-            raise clize.ArgumentError
+            raise typer.BadParameter("wrong class name ({}).".format(base))
         return base_class[0]
 
 
 def main():
     """Run the pyrrha CLI interface."""
     cli = CLI()
-    commands = tuple(cli.get_commands().values())
-    clize.run(*commands, description=cli.__doc__, footnotes=cli.footnotes)
+    app = cli.get_commands()
+    app()
 
 
 if __name__ == "__main__":

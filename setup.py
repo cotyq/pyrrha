@@ -3,7 +3,7 @@ import pathlib
 
 from setuptools import find_packages, setup
 
-REQUIREMENTS = ["numpy", "oct2py", "Jinja2", "clize"]
+REQUIREMENTS = ["numpy", "oct2py", "Jinja2", "typer"]
 
 PATH = pathlib.Path(os.path.abspath(os.path.dirname(__file__)))
 
@@ -13,7 +13,7 @@ DESCRIPTION = (
 )
 
 with open(PATH / "README.md") as fp:
-    LONG_DESCRIPTION = fp.read()  # TODO completar README
+    LONG_DESCRIPTION = fp.read()
 
 with open(PATH / "pyrrha" / "pyrrha.py") as fp:
     VERSION = (

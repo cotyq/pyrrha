@@ -9,3 +9,5 @@ pyrrha.egg-info/
 .tox/
 .coverage
 .vscode
+build/
+dist/

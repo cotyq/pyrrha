@@ -224,6 +224,15 @@ class Runner:
             else:  # Different shape
                 self.report.add_shape_error(method_name, pos)
 
+        # For example: tuple and matrix
+        elif (
+            hasattr(e_p, "shape")
+            and not hasattr(e_i, "shape")
+            or not hasattr(e_p, "shape")
+            and hasattr(e_i, "shape")
+        ):
+            self.report.add_error_type(method_name, pos)
+
         # No shape attribute
         elif e_p == e_i:
             self.report.add_success(method_name, pos)

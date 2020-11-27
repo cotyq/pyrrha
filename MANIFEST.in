@@ -1,6 +1,7 @@
 include *.yml
 include LICENSE
 include tox.ini
+include .coveragerc
 recursive-include pyrrha *.m
 recursive-include pyrrha *.mat
 recursive-include pyrrha *.md
