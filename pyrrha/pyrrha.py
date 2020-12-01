@@ -62,28 +62,35 @@ class CLI:
                     "wrong output file name ({})".format(output)
                 )
 
-    def validate(self, file, method=""):
+    def validate(self, file, method=None):
         try:
             a = {}
             exec(open(file).read(), globals(), a)
             globals().update(a)
-            chk = None
+            implemented_class = None
             for k, v in a.items():
                 if (
                     isclass(v)
                     and getmro(v)[1] != Method
                     and issubclass(v, Method)
                 ):
-                    chk = v
+                    implemented_class = v
                     break
-            if chk is None:
+            if implemented_class is None:
                 raise typer.BadParameter(
                     "no appropiate class found in {}".format(file)
                 )
 
-            runner = Runner(chk, IMPLEMENTATIONS)
-            report = runner.validate_class()
-            print(report.results)
+            runner = Runner(implemented_class, IMPLEMENTATIONS)
+            if method:
+                try:
+                    report = runner.validate_method(method)
+                except ValueError as error:
+                    raise typer.BadParameter(error)
+
+            else:
+                report = runner.validate_class()
+            print(report)
             return report
 
         except FileNotFoundError:

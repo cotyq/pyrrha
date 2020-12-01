@@ -8,3 +8,4 @@ recursive-include pyrrha *.md
 recursive-include pyrrha *.odp
 recursive-include pyrrha *.pdf
 recursive-include pyrrha *.txt
+recursive-include test *.py

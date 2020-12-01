@@ -234,7 +234,7 @@ def test_validate_method_accepted(
         {"name": "sum", "position": 0, "status": Status.SUCCESS},
     ]
 
-    runner.validate_method(test_programmed_method_accepted.sum)
+    runner.validate_method("sum")
 
     assert len(runner.report.results) == len(target_result)
     assert all([a == b for a, b in zip(runner.report.results, target_result)])
@@ -249,7 +249,7 @@ def test_validate_method_value_error(
         {"name": "sum", "position": 0, "status": Status.VALUE_ERROR},
     ]
 
-    runner.validate_method(test_programmed_method_value_error.sum)
+    runner.validate_method("sum")
 
     assert len(runner.report.results) == len(target_result)
     assert all([a == b for a, b in zip(runner.report.results, target_result)])
@@ -264,7 +264,7 @@ def test_validate_method_tuple_error(
         {"name": "sum", "position": 0, "status": Status.TYPE_ERROR},
     ]
 
-    runner.validate_method(test_programmed_method_tuple_error.sum)
+    runner.validate_method("sum")
 
     assert len(runner.report.results) == len(target_result)
     assert all([a == b for a, b in zip(runner.report.results, target_result)])

@@ -12,6 +12,19 @@ class Report:
     def __init__(self):
         self.results = []
 
+    def __str__(self):
+        if not self.results:
+            return ""
+
+        out = "{:20}{:10}{:15}".format("", "RETURN", "")
+        out += "\n{:20}{:10}{:15}".format("METHOD", "POSITION", "STATUS")
+        out += "\n" + "-" * 45
+        for r in self.results:
+            out += "\n{:20}{:10}{:15}".format(
+                r["name"], str(r["position"]), r["status"].name
+            )
+        return out
+
     def add_error_type(self, method_name, pos=0):
         self.results.append(
             {"name": method_name, "position": pos, "status": Status.TYPE_ERROR}

@@ -20,19 +20,28 @@ The name pyrrha comes from Pyrrha, the wife of Deucalion (the son of Prometheus
 ### Generate template from a base class
 
 ```
-pyrrha generate FiniteElement2D --output CustomElement2D
+pyrrha generate FiniteElement2D --output <file_name>
 ```
 
-### Test implemented class
+A `<file_name>` file will be created with the FiniteElement2D template.
 
-Test the whole class
+### Test implementations
+
+#### Test class
 ```
-pyrrha test CustomElement2D
+pyrrha validate <file_name>
 ```
 
-Test a particular method.
+will validate the class defined in `<file_name>` against the correct
+ implementation.
+
+#### Test class method
 ```
-pyrrha test CustomElement2D heat_neumann
+pyrrha validate <file_name> --method <method_name>
 ```
+
+will test only the `<method_name>` method of the class defined in
+ `<file_name>`, comparing it with the correct method implementation.
+ 
 
 <div>Icons made by <a href="https://www.flaticon.com/authors/darius-dan" title="Darius Dan">Darius Dan</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>

@@ -72,11 +72,11 @@ class Runner:
         pipeline = self.base_method.get_pipeline()
 
         for method, args in pipeline:  # For each method
-            self.compare_method_with_impl(method, args)
+            self.compare_method_with_impl(method.__name__, args)
 
         return self.report
 
-    def validate_method(self, method):
+    def validate_method(self, method_name):
         """Validate a single method against the implementation.
 
         Compare the output of a given implemented method with the output of
@@ -85,20 +85,25 @@ class Runner:
 
         Parameters
         ----------
-        method : Method to compare
+        method_name : Method to compare
         """
         # Get list of abstract methods that need to be implemented.
         pipeline = self.base_method.get_pipeline()
 
         # Get the corresponding arguments for that method
-        args = next(
-            arg for met, arg in pipeline if met.__name__ == method.__name__
-        )
-        self.compare_method_with_impl(method, args)
-
+        try:
+            args = next(
+                arg for met, arg in pipeline if met.__name__ == method_name
+            )
+            self.compare_method_with_impl(method_name, args)
+        except StopIteration:
+            raise ValueError(
+                "The method '{}' is not defined in the "
+                "class.".format(method_name)
+            )
         return self.report
 
-    def compare_method_with_impl(self, method, args):
+    def compare_method_with_impl(self, method_name, args):
         """Run the same method in both implementations and compare results.
 
         Given a particular method and its args, check both
@@ -106,19 +111,17 @@ class Runner:
 
         Parameters
         ----------
-        method : Implemented method.
+        method_name : Implemented method.
         args : List of strings containing the method arguments.
 
         """
-        method_name = method.__name__
-
         # Get the necessary params from the values dictionary into a list
         params = [self.values[key] for key in args]
 
         # Call both implemented methods and compare their results
         res_p = getattr(self.programmed, method_name)(*params)
         res_i = getattr(self.implementation, method_name)(*params)
-        self.compare_results(res_p, res_i, method)
+        self.compare_results(res_p, res_i, method_name)
 
     def search_implementation(self, programmed_class):
         """Locate the parent class implementation of a particular class.
@@ -142,7 +145,7 @@ class Runner:
                 return base, impl
         raise NotImplementedError
 
-    def compare_results(self, res_p, res_i, method):
+    def compare_results(self, res_p, res_i, method_name):
         """Compare two outputs depending of its type.
 
         From both implementations outputs, compare types, shapes and
@@ -152,11 +155,9 @@ class Runner:
         ----------
         res_p : Output of the programmed class.
         res_i : Output of the implementation.
-        method : Compared method.
+        method_name : Compared method.
 
         """
-        method_name = method.__name__
-
         res_p = float(res_p) if type(res_p) == int else res_p
         res_i = float(res_i) if type(res_i) == int else res_i
 
@@ -168,7 +169,9 @@ class Runner:
                 zip(res_p, res_i) if type(res_p) is tuple else [(res_p, res_i)]
             )
             for pos, (e_p, e_i) in enumerate(res_t):
-                self.compare_elements(e_p, e_i, method, pos)  # Compare values
+                self.compare_elements(
+                    e_p, e_i, method_name, pos
+                )  # Compare values
 
     @staticmethod
     def error_type(res_p, res_i):
@@ -195,7 +198,7 @@ class Runner:
                 return True
         return False
 
-    def compare_elements(self, e_p, e_i, method, pos=0):
+    def compare_elements(self, e_p, e_i, method_name, pos=0):
         """Compare outputs elements and save to report.
 
         Compare elements from two methods outputs directly. They can be arrays
@@ -208,12 +211,10 @@ class Runner:
         ----------
         e_p : Output of the programmed class.
         e_i : Output of the implementation.
-        method : Method to test.
+        method_name : Method to test.
         pos : Position in the output tuple (zero if it doesn't come from a
         tuple).
         """
-        method_name = method.__name__
-
         # If both contains the 'shape' attribute (arrays)
         if hasattr(e_p, "shape") and hasattr(e_i, "shape"):
             if e_p.shape == e_i.shape:  # Same shape
