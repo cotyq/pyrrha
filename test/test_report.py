@@ -59,3 +59,7 @@ success_method      0         SUCCESS """
     lines_report = str(test_report).split("\n")
     text_report = "\n".join([line.strip() for line in lines_report])
     assert text_report == text_target
+
+
+def test_report_str_empty(test_report):
+    assert str(test_report) == ""
