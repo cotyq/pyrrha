@@ -1,3 +1,5 @@
+"""pyrrha Command Line Interface."""
+
 __version__ = "0.1"
 
 from inspect import getmro, isclass, ismethod
@@ -24,6 +26,13 @@ class CLI:
     )
 
     def get_commands(self):
+        """Return CLI commands.
+
+        Returns
+        -------
+        Typer
+            Typer app with the valid CLI commands
+        """
         app = typer.Typer()
         for k in dir(self):
             if k.startswith("_"):
@@ -39,7 +48,7 @@ class CLI:
         print(VERSION)
 
     def generate(self, base, output=""):
-        """Generate template from given base class
+        """Generate template from given base class.
 
         Parameters
         ----------
@@ -63,6 +72,20 @@ class CLI:
                 )
 
     def validate(self, file, method=None):
+        """Validate implemented class or method.
+
+        Parameters
+        ----------
+        file : str
+            Implementation file path.
+        method: str (optional)
+            Method name to validate.
+
+        Returns
+        -------
+        Report:
+            Report with the validation info.
+        """
         try:
             a = {}
             exec(open(file).read(), globals(), a)

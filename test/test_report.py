@@ -46,3 +46,16 @@ def test_add_success(test_report):
         "status": Status.SUCCESS,
     }
     assert target_result in test_report.results
+
+
+def test_report_str(test_report):
+    test_report.add_success("success_method")
+    target_str = """RETURN
+METHOD              POSITION  STATUS
+---------------------------------------------
+success_method      0         SUCCESS """
+    lines_target = target_str.split("\n")
+    text_target = "\n".join([line.strip() for line in lines_target])
+    lines_report = str(test_report).split("\n")
+    text_report = "\n".join([line.strip() for line in lines_report])
+    assert text_report == text_target

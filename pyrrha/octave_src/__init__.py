@@ -1,3 +1,5 @@
+"""Octave source files."""
+
 import os
 import pathlib
 
@@ -6,6 +8,20 @@ FEM2D_PATH = str(PATH / "fem2d_octave")
 
 
 def correct_indexes(arr, name):
+    """Convert Python array indexes to Octave indexes.
+
+    Parameters
+    ----------
+    arr : numpy.array
+        Array to convert.
+    name : str
+        Array identifier, that determines which columns to convert.
+
+    Returns
+    -------
+    numpy.array
+        Converted array
+    """
     out = arr.copy()
     if name == "icone":
         out[:, 0:3] += 1

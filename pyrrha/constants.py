@@ -1,3 +1,5 @@
+"""Constants definitions."""
+
 from .impl.finite_element_2d_impl import FiniteElement2DImpl
 from .method import FiniteElement2D
 
