@@ -1,3 +1,9 @@
+# This file is part of the
+#   Pyrrha Project (https://gitlab.com/dsklar/pyrrha).
+# Copyright (c) 2020, Diego Sklar, Constanza Quaglia, Franco Matzkin
+# License: MIT
+#   Full Text: https://gitlab.com/dsklar/pyrrha/-/blob/master/LICENSE
+
 """Runner class for method/class comparison.
 
 The Runner class allows to compare two different implementations of a
@@ -50,7 +56,10 @@ class Runner:
         )
 
         self.values = self.base_method.get_initial_values(seed)
-        self.programmed = programmed_class()
+        try:
+            self.programmed = programmed_class()
+        except Exception as e:
+            raise RuntimeError(f"Failed to initialize programmed class ({e}).")
         self.implementation = self.method_impl()
 
     def validate_class(self):
@@ -101,6 +110,10 @@ class Runner:
                 "The method '{}' is not defined in the "
                 "class.".format(method_name)
             )
+        except Exception as e:
+            raise RuntimeError(
+                f"Failed to execute method {method_name} ({e})."
+            )
         return self.report
 
     def compare_method_with_impl(self, method_name, args):
@@ -119,7 +132,12 @@ class Runner:
         params = [self.values[key] for key in args]
 
         # Call both implemented methods and compare their results
-        res_p = getattr(self.programmed, method_name)(*params)
+        try:
+            res_p = getattr(self.programmed, method_name)(*params)
+        except Exception as e:
+            raise RuntimeError(
+                f"Failed to execute method {method_name} ({e})."
+            )
         res_i = getattr(self.implementation, method_name)(*params)
         self.compare_results(res_p, res_i, method_name)
 
