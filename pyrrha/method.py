@@ -320,21 +320,3 @@ class FiniteElement2D(Method):
             K, C, F, x_node, icone_mod, model, nout=2
         )
         return phi, q
-
-
-class FiniteVolume2D(Method):
-    """Class to instance Method.
-
-    class to define a specific Numerical Method.
-    """
-
-    pass
-
-
-class FiniteDifferences(Method):
-    """Class to instance Method.
-
-    class to define a specific Numerical Method.
-    """
-
-    pass

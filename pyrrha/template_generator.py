@@ -4,7 +4,7 @@ import inspect
 
 from jinja2 import Template
 
-# templeate format to generate each method
+# template format to generate each method
 TEMPLATE = Template(
     """from pyrrha.method import {{cls_base_name}}
 
