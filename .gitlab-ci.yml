@@ -17,6 +17,7 @@ cache:
 
 before_script:
   - pip install virtualenv
+  - pip install sphinx_rtd_theme
   - virtualenv env
   - source env/bin/activate
 
