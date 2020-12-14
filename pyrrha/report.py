@@ -1,3 +1,9 @@
+# This file is part of the
+#   Pyrrha Project (https://gitlab.com/dsklar/pyrrha).
+# Copyright (c) 2020, Diego Sklar, Constanza Quaglia, Franco Matzkin
+# License: MIT
+#   Full Text: https://gitlab.com/dsklar/pyrrha/-/blob/master/LICENSE
+
 """Report handling."""
 
 from enum import Enum
@@ -29,12 +35,12 @@ class Report:
         if not self.results:
             return ""
 
-        out = "{:20}{:10}{:15}".format("", "RETURN", "")
-        out += "\n{:20}{:10}{:15}".format("METHOD", "POSITION", "STATUS")
+        out = f"{'':20}{'RETURN':10}{'':15}"
+        out += f"\n{'METHOD':20}{'POSITION':10}{'STATUS':15}"
         out += "\n" + "-" * 45
         for r in self.results:
-            out += "\n{:20}{:10}{:15}".format(
-                r["name"], str(r["position"]), r["status"].name
+            out += (
+                f"\n{r['name']:20}{str(r['position']):10}{r['status'].name:15}"
             )
         return out
 

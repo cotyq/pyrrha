@@ -1,3 +1,9 @@
+# This file is part of the
+#   Pyrrha Project (https://gitlab.com/dsklar/pyrrha).
+# Copyright (c) 2020, Diego Sklar, Constanza Quaglia, Franco Matzkin
+# License: MIT
+#   Full Text: https://gitlab.com/dsklar/pyrrha/-/blob/master/LICENSE
+
 import os
 import pathlib
 import tempfile
@@ -138,12 +144,43 @@ def test_validate_class_empty(finite_element_2D_template, script_runner):
     assert ret.stdout == ""
 
 
+def test_validate_class_zero_div(finite_element_2D_template, script_runner):
+    path = os.path.join("test", "impl", "FEM2DTestZeroDiv.py")
+
+    ret = script_runner.run("pyrrha", "validate", path)
+    error_msg = "Failed to execute method heat_initialize (division by zero)."
+    assert not ret.success
+    assert error_msg in ret.stderr
+    assert ret.stdout == ""
+
+
+def test_validate_method_zero_div(finite_element_2D_template, script_runner):
+    path = os.path.join("test", "impl", "FEM2DTestZeroDiv.py")
+
+    ret = script_runner.run(
+        "pyrrha", "validate", path, "--method", "heat_initialize"
+    )
+    error_msg = "Failed to execute method heat_initialize"
+    assert not ret.success
+    assert error_msg in ret.stderr
+    assert ret.stdout == ""
+
+
 def test_validate_class_file_not_found(
     finite_element_2D_template, script_runner
 ):
     path = os.path.join("test", "impl", "FileNotExists.py")
     ret = script_runner.run("pyrrha", "validate", path)
     error_msg = "file not found"
+    assert not ret.success
+    assert error_msg in ret.stderr
+    assert ret.stdout == ""
+
+
+def test_validate_class_wrong_init(finite_element_2D_template, script_runner):
+    path = os.path.join("test", "impl", "FEM2DTestWrongInit.py")
+    ret = script_runner.run("pyrrha", "validate", path)
+    error_msg = "Failed to initialize programmed class"
     assert not ret.success
     assert error_msg in ret.stderr
     assert ret.stdout == ""
