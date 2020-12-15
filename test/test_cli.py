@@ -8,7 +8,7 @@ import os
 import pathlib
 import tempfile
 
-from pyrrha.pyrrha import CLI
+from pyrrha.cli import CLI
 from pyrrha.report import Status as S
 
 import pytest
@@ -20,7 +20,7 @@ def version():
         os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
     )
 
-    with open(path / "pyrrha" / "pyrrha.py") as fp:
+    with open(path / "pyrrha" / "cli.py") as fp:
         version = (
             [
                 line
@@ -106,7 +106,7 @@ def test_generate_wrong_filename(finite_element_2D_template, script_runner):
 
 
 def test_validate_method_wrong_name(finite_element_2D_template, script_runner):
-    path = os.path.join("test", "impl", "FEM2DTest.py")
+    path = os.path.join("test", "impl", "fem_2d_test.py")
 
     ret = script_runner.run(
         "pyrrha", "validate", path, "--method", "heat_init44534ialize"
@@ -126,7 +126,7 @@ def test_generate_class_wrong_name(finite_element_2D_template, script_runner):
 
 
 def test_validate_class_wrong_inher(finite_element_2D_template, script_runner):
-    path = os.path.join("test", "impl", "FEM2DTestWrongInheritance.py")
+    path = os.path.join("test", "impl", "fem_2d_test_wrong_inheritance.py")
     ret = script_runner.run("pyrrha", "validate", path)
     error_msg = "no appropiate class found in"
     assert not ret.success
@@ -135,7 +135,7 @@ def test_validate_class_wrong_inher(finite_element_2D_template, script_runner):
 
 
 def test_validate_class_empty(finite_element_2D_template, script_runner):
-    path = os.path.join("test", "impl", "EmptyFile.py")
+    path = os.path.join("test", "impl", "empty_file.py")
 
     ret = script_runner.run("pyrrha", "validate", path)
     error_msg = "no appropiate class found in"
@@ -145,7 +145,7 @@ def test_validate_class_empty(finite_element_2D_template, script_runner):
 
 
 def test_validate_class_zero_div(finite_element_2D_template, script_runner):
-    path = os.path.join("test", "impl", "FEM2DTestZeroDiv.py")
+    path = os.path.join("test", "impl", "fem_2d_test_zero_div.py")
 
     ret = script_runner.run("pyrrha", "validate", path)
     error_msg = "Failed to execute method heat_initialize (division by zero)."
@@ -155,7 +155,7 @@ def test_validate_class_zero_div(finite_element_2D_template, script_runner):
 
 
 def test_validate_method_zero_div(finite_element_2D_template, script_runner):
-    path = os.path.join("test", "impl", "FEM2DTestZeroDiv.py")
+    path = os.path.join("test", "impl", "fem_2d_test_zero_div.py")
 
     ret = script_runner.run(
         "pyrrha", "validate", path, "--method", "heat_initialize"
@@ -178,7 +178,7 @@ def test_validate_class_file_not_found(
 
 
 def test_validate_class_wrong_init(finite_element_2D_template, script_runner):
-    path = os.path.join("test", "impl", "FEM2DTestWrongInit.py")
+    path = os.path.join("test", "impl", "fem_2d_test_wrong_init.py")
     ret = script_runner.run("pyrrha", "validate", path)
     error_msg = "Failed to initialize programmed class"
     assert not ret.success
@@ -188,7 +188,7 @@ def test_validate_class_wrong_init(finite_element_2D_template, script_runner):
 
 def test_validate_class_fe2d_cli(finite_element_2D_template):
     cli = CLI()
-    report = cli.validate(os.path.join("test", "impl/FEM2DTest.py"))
+    report = cli.validate(os.path.join("test", "impl/fem_2d_test.py"))
     repo = [
         {"name": "heat_initialize", "position": 0, "status": S.SUCCESS},
         {"name": "heat_initialize", "position": 1, "status": S.SUCCESS},
@@ -205,7 +205,7 @@ def test_validate_class_fe2d_cli(finite_element_2D_template):
 def test_validate_method_fe2d_cli(finite_element_2D_template):
     cli = CLI()
     report = cli.validate(
-        os.path.join("test", "impl/FEM2DTest.py"), "heat_initialize"
+        os.path.join("test", "impl/fem_2d_test.py"), "heat_initialize"
     )
     repo = [
         {"name": "heat_initialize", "position": 0, "status": S.SUCCESS},

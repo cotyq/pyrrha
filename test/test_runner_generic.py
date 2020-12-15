@@ -30,9 +30,9 @@ def test_base_method():
         @classmethod
         def get_pipeline(cls):
             return [
-                (cls.sum, ["a", "b"]),
-                (cls.sort, ["a", "b"]),
-                (cls.get_first_elem, ["a"]),
+                cls.sum,
+                cls.sort,
+                cls.get_first_elem,
             ]
 
         @abstractmethod

@@ -3,6 +3,7 @@
 # Copyright (c) 2020, Diego Sklar, Constanza Quaglia, Franco Matzkin
 # License: MIT
 #   Full Text: https://gitlab.com/dsklar/pyrrha/-/blob/master/LICENSE
+import inspect
 
 import numpy as np
 
@@ -28,7 +29,11 @@ def test_pipeline_parameters(test_initial_values, test_pipeline):
     are present in the dictionary returned by get_random_values
     :return:
     """
-    pipeline_keys = {key for _, keys in test_pipeline for key in keys}
+    pipeline_keys = {
+        key
+        for met in test_pipeline
+        for key in list(inspect.signature(met).parameters)[1:]
+    }
     assert pipeline_keys.issubset(test_initial_values.keys())
 
 

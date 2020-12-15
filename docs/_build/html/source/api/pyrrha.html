@@ -94,7 +94,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-pyrrha.constants">pyrrha.constants module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-pyrrha.method">pyrrha.method module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-pyrrha.pyrrha">pyrrha.pyrrha module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pyrrha.cli">pyrrha.cli module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-pyrrha.report">pyrrha.report module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-pyrrha.runner">pyrrha.runner module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-pyrrha.template_generator">pyrrha.template_generator module</a></li>
@@ -471,22 +471,22 @@ of de system based in data Robin matrix.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-pyrrha.pyrrha">
-<span id="pyrrha-pyrrha-module"></span><h2>pyrrha.pyrrha module<a class="headerlink" href="#module-pyrrha.pyrrha" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyrrha.cli">
+<span id="pyrrha-pyrrha-module"></span><h2>pyrrha.cli module<a class="headerlink" href="#module-pyrrha.cli" title="Permalink to this headline">¶</a></h2>
 <p>pyrrha Command Line Interface.</p>
 <dl class="class">
-<dt id="pyrrha.pyrrha.CLI">
-<em class="property">class </em><code class="sig-prename descclassname">pyrrha.pyrrha.</code><code class="sig-name descname">CLI</code><a class="headerlink" href="#pyrrha.pyrrha.CLI" title="Permalink to this definition">¶</a></dt>
+<dt id="pyrrha.cli.CLI">
+<em class="property">class </em><code class="sig-prename descclassname">pyrrha.cli.</code><code class="sig-name descname">CLI</code><a class="headerlink" href="#pyrrha.cli.CLI" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Pyrrha console client.</p>
 <dl class="attribute">
-<dt id="pyrrha.pyrrha.CLI.footnotes">
-<code class="sig-name descname">footnotes</code><em class="property"> = 'MIT License.\nCopyright (c) 2020.\nDiego Sklar, Constanza Quaglia, Franco Matzkin.'</em><a class="headerlink" href="#pyrrha.pyrrha.CLI.footnotes" title="Permalink to this definition">¶</a></dt>
+<dt id="pyrrha.cli.CLI.footnotes">
+<code class="sig-name descname">footnotes</code><em class="property"> = 'MIT License.\nCopyright (c) 2020.\nDiego Sklar, Constanza Quaglia, Franco Matzkin.'</em><a class="headerlink" href="#pyrrha.cli.CLI.footnotes" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="pyrrha.pyrrha.CLI.generate">
-<code class="sig-name descname">generate</code><span class="sig-paren">(</span><em class="sig-param">base</em>, <em class="sig-param">output=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyrrha.pyrrha.CLI.generate" title="Permalink to this definition">¶</a></dt>
+<dt id="pyrrha.cli.CLI.generate">
+<code class="sig-name descname">generate</code><span class="sig-paren">(</span><em class="sig-param">base</em>, <em class="sig-param">output=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyrrha.cli.CLI.generate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate template from given base class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -499,8 +499,8 @@ of de system based in data Robin matrix.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyrrha.pyrrha.CLI.get_commands">
-<code class="sig-name descname">get_commands</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrrha.pyrrha.CLI.get_commands" title="Permalink to this definition">¶</a></dt>
+<dt id="pyrrha.cli.CLI.get_commands">
+<code class="sig-name descname">get_commands</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrrha.cli.CLI.get_commands" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return CLI commands.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -513,8 +513,8 @@ of de system based in data Robin matrix.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyrrha.pyrrha.CLI.validate">
-<code class="sig-name descname">validate</code><span class="sig-paren">(</span><em class="sig-param">file</em>, <em class="sig-param">method=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyrrha.pyrrha.CLI.validate" title="Permalink to this definition">¶</a></dt>
+<dt id="pyrrha.cli.CLI.validate">
+<code class="sig-name descname">validate</code><span class="sig-paren">(</span><em class="sig-param">file</em>, <em class="sig-param">method=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyrrha.cli.CLI.validate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Validate implemented class or method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -533,16 +533,16 @@ of de system based in data Robin matrix.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyrrha.pyrrha.CLI.version">
-<code class="sig-name descname">version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrrha.pyrrha.CLI.version" title="Permalink to this definition">¶</a></dt>
+<dt id="pyrrha.cli.CLI.version">
+<code class="sig-name descname">version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrrha.cli.CLI.version" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print pyrrha version.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="function">
-<dt id="pyrrha.pyrrha.main">
-<code class="sig-prename descclassname">pyrrha.pyrrha.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrrha.pyrrha.main" title="Permalink to this definition">¶</a></dt>
+<dt id="pyrrha.cli.main">
+<code class="sig-prename descclassname">pyrrha.cli.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrrha.cli.main" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run the pyrrha CLI interface.</p>
 </dd></dl>
 

@@ -15,7 +15,7 @@ DESCRIPTION = (
 with open(PATH / "README.md") as fp:
     LONG_DESCRIPTION = fp.read()
 
-with open(PATH / "pyrrha" / "pyrrha.py") as fp:
+with open(PATH / "pyrrha" / "cli.py") as fp:
     VERSION = (
         [line for line in fp.readlines() if line.startswith("__version__")][0]
         .split("=", 1)[-1]
@@ -37,5 +37,5 @@ setup(
     packages=find_packages(include=["pyrrha", "pyrrha.*"]),
     install_requires=REQUIREMENTS,
     include_package_data=True,
-    entry_points={"console_scripts": ["pyrrha=pyrrha.pyrrha:main"]},
+    entry_points={"console_scripts": ["pyrrha=pyrrha.cli:main"]},
 )

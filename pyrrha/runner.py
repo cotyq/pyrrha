@@ -10,6 +10,7 @@ The Runner class allows to compare two different implementations of a
 certain abstract class, by comparing a particular method only, or the whole
 set of abstract methods that need to be implemented.
 """
+import inspect
 
 import numpy as np
 
@@ -80,8 +81,11 @@ class Runner:
         # Get list of abstract methods that need to be implemented.
         pipeline = self.base_method.get_pipeline()
 
-        for method, args in pipeline:  # For each method
-            self.compare_method_with_impl(method.__name__, args)
+        for method in pipeline:  # For each method
+            signature = inspect.signature(method)
+            params = list(signature.parameters)[1:]
+
+            self.compare_method_with_impl(method.__name__, params)
 
         return self.report
 
@@ -101,10 +105,14 @@ class Runner:
 
         # Get the corresponding arguments for that method
         try:
-            args = next(
-                arg for met, arg in pipeline if met.__name__ == method_name
+            method = next(
+                met for met in pipeline if met.__name__ == method_name
             )
-            self.compare_method_with_impl(method_name, args)
+
+            signature = inspect.signature(method)
+            params = list(signature.parameters)[1:]
+
+            self.compare_method_with_impl(method_name, params)
         except StopIteration:
             raise ValueError(
                 "The method '{}' is not defined in the "

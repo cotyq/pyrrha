@@ -114,7 +114,7 @@ class FiniteElement2D(Method):
         matrix K with n_nodes rows and n_nodes columns and vector F with
         n_nodes rows.
         """
-        raise ...
+        raise NotImplementedError()
 
     @abstractmethod
     def heat_neumann(self, F, neumann, x_node):
@@ -136,7 +136,7 @@ class FiniteElement2D(Method):
         -------
         modified F vector
         """
-        raise ...
+        raise NotImplementedError()
 
     @abstractmethod
     def heat_robin(self, K, F, robin, x_node):
@@ -160,7 +160,7 @@ class FiniteElement2D(Method):
         -------
         modified K maxtrix and F vector
         """
-        raise ...
+        raise NotImplementedError()
 
     @abstractmethod
     def heat_dirichlet(self, K, F, dirichlet):
@@ -182,16 +182,16 @@ class FiniteElement2D(Method):
         -------
         modified K maxtrix and F vector
         """
-        raise ...
+        raise NotImplementedError()
 
     @classmethod
     def get_pipeline(cls):
         """Return tuple of implemmented method with their parameters."""
         return [
-            (cls.heat_initialize, ["n_nodes"]),
-            (cls.heat_neumann, ["F", "neumann", "x_node"]),
-            (cls.heat_robin, ["K", "F", "robin", "x_node"]),
-            (cls.heat_dirichlet, ["K", "F", "dirichlet"]),
+            cls.heat_initialize,
+            cls.heat_neumann,
+            cls.heat_robin,
+            cls.heat_dirichlet,
         ]
 
     def run(

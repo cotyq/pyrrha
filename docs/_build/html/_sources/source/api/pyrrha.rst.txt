@@ -28,10 +28,10 @@ pyrrha.method module
    :undoc-members:
    :show-inheritance:
 
-pyrrha.pyrrha module
+pyrrha.cli module
 --------------------
 
-.. automodule:: pyrrha.pyrrha
+.. automodule:: pyrrha.cli
    :members:
    :undoc-members:
    :show-inheritance:
